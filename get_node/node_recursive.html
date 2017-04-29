@@ -4,54 +4,6 @@
 <body>
 <ul>
 <li>item1
-<ul>
-<li>item2
-<div>
-<ol>
-<li>item3
-</li>
-</ol>
-</div>
-</li>
-</ul>
-</li>
-<li>item4-1
-<ul>
-<li>item4-2
-<ul>
-<li>item4-3
-<ul>
-<li>
-item4-4
-<ol>
-<li>item4-5</li>
-</ol>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>item1
-<ul>
-<li>item2
-<div>
-<ol>
-<li>item3
-<span>
-<ul>
-<li>item4
-</li>
-</ul>
-</span>
-</li>
-</ol>
-</div>
-</li>
-</ul>
 </li>
 </ul>
 <script>
@@ -89,6 +41,14 @@ GetNodeHeight.prototype = {
 	getHeight : function(){
 		while(item = this.stack.pop()){
 			for(var i = 0; i < item[0].length; i += 1){
+				if(item[0][i].children.length === 0 && item[0].length === 1){
+					this.current = 1;
+					break;
+				}
+				if(item[0][i].children.length === 0){
+					this.current = 1;
+					continue;
+				}
 				if(item[0][i] && item[0][i].children){
 					this.stack.push(item[0]);
 					
