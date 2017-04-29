@@ -1,0 +1,107 @@
+<html>
+<head>
+</head>
+<body>
+<ul>
+<li>item1
+<ul>
+<li>item2
+<div>
+<ol>
+<li>item3
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</li>
+<li>item4-1
+<ul>
+<li>item4-2
+<ul>
+<li>item4-3
+<ul>
+<li>
+item4-4
+<ol>
+<li>item4-5</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>item1
+<ul>
+<li>item2
+<div>
+<ol>
+<li>item3
+<span>
+<ul>
+<li>item4
+</li>
+</ul>
+</span>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+<script>
+var GetNodeHeight = function(tags, conditionTags){
+	if(typeof tags !== 'string' || typeof conditionTags !== 'string') return;
+	
+	this.stack = [];
+	this.current = 1;
+	this.result = 0;
+	this.condition = conditionTags;
+	this.tags = Array.prototype.slice.call(document.querySelectorAll(tags));
+	
+	if(this.tags.length === 0) return;
+	
+	this.initialize();
+}
+
+GetNodeHeight.prototype = {
+	initialize : function(){
+		var node;
+		
+		while (node = this.tags.shift()){
+			this.stack.push([node.children]);
+			this.getHeight();
+			
+			if(this.current > this.result){
+				this.result = this.current;
+				this.current = 1;
+			}
+		};
+		console.log(this.result)
+		return this.result;
+	},
+	
+	getHeight : function(){
+		while(item = this.stack.pop()){
+			for(var i = 0; i < item[0].length; i += 1){
+				if(item[0][i] && item[0][i].children){
+					this.stack.push(item[0]);
+					
+					if(item[0][i].tagName.toLowerCase() === 'li'){
+						this.current += 1;
+					}
+				}
+			}
+		}
+	}
+}
+
+new GetNodeHeight('ul', 'li');
+</script>
+</body>
+</html>
